@@ -1,0 +1,32 @@
+- name: Build a Rails development environment
+  hosts: dev-web-servers
+  user: vagrant
+  become: yes
+  become_user: root
+
+  roles:
+    - yum-package
+    - rbenv
+    - nodejs
+    - npm
+    - gem
+    - pip
+
+  vars_prompt:
+  - name: yum_update
+    prompt: "Do you accept updates ?"
+    private: no
+    default: Y
+
+  - name: yum_install
+    prompt: "Do you install package ?"
+    private: no
+    default: Y
+
+- name: Build a mysql
+  hosts: dev-db-servers
+  user: vagrant
+  become: yes
+  become_user: root
+  roles:
+    - mysql

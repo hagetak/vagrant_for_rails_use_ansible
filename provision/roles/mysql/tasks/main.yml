@@ -1,0 +1,66 @@
+---
+# install mysqld_5.6
+- name:  レポジトリの登録
+  yum:
+    name: http://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.rpm
+    state: present
+
+- name: mysqld のインストール
+  yum:
+    name: "{{ item }}"
+    enablerepo: mysql56-community
+    disablerepo: mysql57-community
+    state: present
+  with_items:
+    - mysql-community-server
+    - mysql-community-client
+    - mysql-community-common
+    - mysql-community-libs
+    - mysql-community-libs-compat
+
+- name: mysqld 起動・自動起動設定
+  service:
+    name=mysqld
+    state=started
+    enabled=yes
+
+- name: Ansible 用 mysql モジュールで必要なパッケージのインストール
+  yum:
+    name: MySQL-python
+    state: present
+
+- name: 初期設定確認(mysqladmin ping で確認)
+  shell: "mysqladmin --defaults-file={{ mysqld_5_6.defaults_file}} ping | grep alive"
+  ignore_errors: true
+  register: init_flag
+
+- name: anonymous ユーザの削除
+  mysql_user:
+    name: ""
+    host: "{{ item }}"
+    state: absent
+  with_items:
+    - localhost.localdomain
+    - localhost
+  when: init_flag|success
+
+- name: root ユーザのパスワード変更
+  mysql_user:
+    name: "root"
+    host: "{{ item }}"
+    password: "{{ mysqld_5_6.root_password }}"
+  with_items:
+    - 127.0.0.1
+    - ::1
+    - localhost.localdomain
+    - localhost
+  when: init_flag|success
+
+- name: root ユーザ接続設定ファイル作成
+  template:
+    src: .my.cnf.j2
+    dest: "{{ mysqld_5_6.defaults_file }}"
+    owner: root
+    group: root
+    mode: 0600
+  when: init_flag|success

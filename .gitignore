@@ -1,0 +1,38 @@
+# ref: https://github.com/github/gitignore/blob/master/Global/macOS.gitignore
+# General
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# ref: https://github.com/github/gitignore/blob/master/Global/Vagrant.gitignore
+# General
+.vagrant/
+
+# Log files (if you are creating logs in debug mode, uncomment this)
+# *.logs
+
+# ref: https://github.com/github/gitignore/blob/master/Global/Ansible.gitignore
+*.retry

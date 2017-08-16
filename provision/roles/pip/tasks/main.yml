@@ -1,0 +1,14 @@
+---
+- name: Add repository for epel
+  yum: name='epel-release' state=latest
+
+- name: Install ansible and pip
+  yum: name={{ item }} state=latest
+  with_items:
+    - ansible
+    - python-pip
+
+- name: Install boto
+  pip: name={{ item }} state=latest
+  with_items:
+    - boto

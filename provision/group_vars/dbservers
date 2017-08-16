@@ -1,0 +1,7 @@
+# dbservers Variables
+
+mysqld_5_6:
+  # root パスワード
+  root_password: bYcGg7Ssv7R6ps3RoFS
+  # 接続用設定ファイルパス
+  defaults_file: /etc/my.cnf

@@ -1,0 +1,6 @@
+---
+- name: Install javascript tools
+  npm: name={{ item }} state=latest global=yes
+  with_items:
+    - bower
+    - grunt-cli

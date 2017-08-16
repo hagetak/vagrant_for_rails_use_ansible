@@ -1,0 +1,9 @@
+---
+    - name: setup nodejs6.x
+      become: yes
+      shell: curl -sL https://rpm.nodesource.com/setup_6.x | sudo -E bash -
+    - name: installing latest version of node.js
+      become: yes
+      yum:
+        name: nodejs
+        state: latest
